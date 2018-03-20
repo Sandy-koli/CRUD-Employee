@@ -10,6 +10,7 @@ import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
   styleUrls: ['./create-employee.component.css']
 })
 export class CreateEmployeeComponent implements OnInit {
+  previewPhoto = false;
   datepickerConfig: Partial<BsDatepickerConfig>;
   colorTheme: 'theme-blue';
   // gender = 'female';
@@ -34,6 +35,11 @@ export class CreateEmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  togglePreviewPhoto() {
+this.previewPhoto = !this.previewPhoto;
+console.log('PreviewPhoto: ' + this.previewPhoto);
   }
 
   onSave_Click(empForm: NgForm): void {
