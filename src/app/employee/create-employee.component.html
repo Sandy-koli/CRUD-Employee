@@ -62,27 +62,28 @@
 
       <!-- Dropdown List -->
       <div class="form-group">
-        <label for="department">Department:</label>
-        <select id="department" [(ngModel)]="department" name="department">
-          <option *ngFor="let dept of departments" [value]="dept.id" >{{dept.name}}</option>
-          
-        </select>
+        <div class="form-control">
+          <label for="department">Department:</label>
+          <select id="department" [(ngModel)]="department" name="department">
+            <option *ngFor="let dept of departments" [value]="dept.id">{{dept.name}}</option>
+          </select>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label for="dateOfBirth">Date of Birth:</label>
-        <input type="text" bsDatepicker id="dateOfBirth" [(ngModel)]="dateOfBirth" name="dateOfBirth">
+      <div class="row">
+        <div class="form-group col-md-5" >
+          <div class="form-control">
+            <label for="dateOfBirth">Date of Birth:</label>
+            <input type="text" bsDatepicker [bsConfig]="datepickerConfig" id="dateOfBirth" [(ngModel)]="dateOfBirth" name="dateOfBirth" placement="left">
+          </div>
+        </div>
       </div>
-
 
     </div>
     <div class="panel-footer">
       <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </div>
-
-
-
 </form>
 
 Angular generated Form module: {{empForm.value | json}}
