@@ -7,6 +7,8 @@ import { EmployeelistComponent } from './employee/employeelist.component';
 import { CreateEmployeeComponent } from './employee/create-employee.component';
 import { Route } from '@angular/compiler/src/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { SelectValidationDirective } from './shared/select-validation.directive';
+import { HttpModule } from '@angular/http';
 
 const appRoute: Routes = [
   { path: 'list', component: EmployeelistComponent },
@@ -18,13 +20,15 @@ const appRoute: Routes = [
   declarations: [
     AppComponent,
     EmployeelistComponent,
-    CreateEmployeeComponent
+    CreateEmployeeComponent,
+    SelectValidationDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
     BsDatepickerModule.forRoot(),
-    RouterModule.forRoot(appRoute)
+    RouterModule.forRoot(appRoute),
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Department } from '../Model/department.model';
+import { Employee } from '../Model/employee.model';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 
@@ -16,6 +17,18 @@ export class CreateEmployeeComponent implements OnInit {
   // gender = 'female';
   // isActive = true;
   // department = '5';
+  employee: Employee = {
+    id: null,
+    name: null,
+    gender: null,
+    email: '',
+    phoneNumber: null,
+    contactpreference: null,
+    dateOfBirth: null,
+    department: 'select',
+    isActive: null,
+    photoPath: null
+    };
   departments: Department[] = [
     { id: 1, name: 'Help Desk' },
     { id: 2, name: 'HR' },
@@ -27,9 +40,9 @@ export class CreateEmployeeComponent implements OnInit {
   constructor() {
     this.datepickerConfig = Object.assign({}, {
       // containerClass: this.colorTheme,
-      showWeekNumbers: false,
-      minDate: new Date(2018, 0, 1),
-      maxDate: new Date(2018, 12, 31),
+      // showWeekNumbers: false,
+      // minDate: new Date(2018, 0, 1),
+      // maxDate: new Date(2018, 12, 31),
       dateInputFormat: 'DD/MMM/YYYY'
     });
   }
@@ -42,8 +55,8 @@ this.previewPhoto = !this.previewPhoto;
 console.log('PreviewPhoto: ' + this.previewPhoto);
   }
 
-  onSave_Click(empForm: NgForm): void {
-    console.log(empForm.value);
+  onSave_Click(NewEmployee: Employee): void {
+    console.log(NewEmployee);
   }
 
 }

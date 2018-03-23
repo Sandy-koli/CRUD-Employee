@@ -1,4 +1,4 @@
-<form #empForm="ngForm" (ngSubmit)="onSave_Click(empForm)">
+<form #empForm="ngForm" (ngSubmit)="onSave_Click(employee)">
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h3 class="panel-title">Create Employee</h3>
@@ -6,75 +6,138 @@
     <div class="panel-body">
 
       <!-- textbox -->
-      <div class="form-group">
-        <label for="fullname">FullName:</label>
-        <input required type="text" id="fullname" [(ngModel)]="fullname" name="fullname" class="form-control">
+      <div class="form-group" [class.has-error]="name.invalid && name.touched" [class.has-success]="name.valid">
+        <label for="name" class="control-label">FullName:</label>
+        <input required type="text" id="name" [(ngModel)]="employee.name" name="name" #name="ngModel" class="form-control">
+        <span class="help-block" *ngIf="(name.invalid && name.touched)">Name is required...</span>
+      </div>
+      <div>
+        <h3>Angular Field Control and Form validations:</h3>
+      </div>
+      <!-- <div class="row">
+      <div class="col-md-6">
+        <table >
+          <tr  style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td colspan="2" style="padding:3px; white-space:nowrap; width:100%">
+                <h4>Full Name field</h4>
+            </td>
+          </tr>
+          <tr style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td style="padding:3px; white-space:nowrap; width:33%">touched: {{name.touched}}</td>
+            <td style="padding:3px; white-space:nowrap; width:33%">Untouched: {{name.untouched}}</td>
+          </tr>
+          <tr style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td style="padding:3px; white-space:nowrap; width:33%">pristine: {{name.pristine}}</td>
+            <td style="padding:3px; white-space:nowrap; width:33%">dirty: {{name.dirty}}</td>
+          </tr>
+          <tr style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td style="padding:3px; white-space:nowrap; width:33%">Valid: {{name.valid}}</td>
+            <td style="padding:3px; white-space:nowrap; width:33%">InValid: {{name.invalid}}</td>
+          </tr>
+        </table>
       </div>
 
+      <div class="col-md-6">
+        <table >
+          <tr  style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td colspan="2" style="padding:3px; white-space:nowrap; width:100%">
+                <h4>Emp Form validations</h4>
+            </td>
+          </tr>
+          <tr style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td style="padding:3px; white-space:nowrap; width:33%">touched: {{empForm.touched}}</td>
+            <td style="padding:3px; white-space:nowrap; width:33%">Untouched: {{empForm.untouched}}</td>
+          </tr>
+          <tr style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td style="padding:3px; white-space:nowrap; width:33%">pristine: {{empForm.pristine}}</td>
+            <td style="padding:3px; white-space:nowrap; width:33%">dirty: {{empForm.dirty}}</td>
+          </tr>
+          <tr style="background-color: rgb(212, 149, 13); font-weight: bold">
+            <td style="padding:3px; white-space:nowrap; width:33%">Valid: {{empForm.valid}}</td>
+            <td style="padding:3px; white-space:nowrap; width:33%">InValid: {{empForm.invalid}}</td>
+          </tr>
+        </table>
+      </div>
+    </div> -->
       <!-- textbox -->
-      <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="text" id="email" [(ngModel)]="email" name="email_anyName_will_do" class="form-control">
+      <div class="form-group" [class.has-error]="email.invalid">
+        <label for="email" class="control-label">Email: (inbuilt in angular 4.0+)</label>
+        <input [required]="contactpreference.value=='email'" [email]="employee.email != ''" type="text" id="email" [(ngModel)]="employee.email" #email="ngModel" name="email"
+          class="form-control">
+        <span class="help-block" *ngIf="(email.errors?.required)">Email is required...</span>
+        <span class="help-block" *ngIf="(email.errors?.email)">Email is InValid...</span>
       </div>
 
+
+      <!-- <div class="form-group" [class.has-error]="email.invalid && email.touched">
+        <label for="email" class="control-label">Email: (pattern validator)</label>
+        <input required [pattern]="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" type="text" id="email" [(ngModel)]="employee.email" #email="ngModel" name="email" class="form-control">
+        <span class="help-block" *ngIf="(email.errors?.required && email.touched)">Email is required...</span>
+        <span class="help-block" *ngIf="(email.errors?.pattern && email.touched)">Email is InValid...</span>
+      </div> -->
+
       <!-- textbox -->
-      <div class="form-group">
-        <label for="phone">Phone Number:</label>
-        <input type="text" id="phone" [(ngModel)]="phone" name="phone_anyName_will_do" class="form-control">
+      <div class="form-group" [class.has-error]="phone.invalid">
+        <label for="phone" class="control-label">Phone Number:</label>
+        <input type="text" [required]="contactpreference.value=='phone'" id="phone" [(ngModel)]="employee.phoneNumber" #phone="ngModel" name="phone_anyName_will_do" class="form-control">
       </div>
+      <span class="help-block" *ngIf="(phone.errors?.email)">Phone Number is Required..</span>
 
       <!-- Radio button -->
-      <div class="form-group">
-        <label>Contact Preference:</label>
+      <div class="form-group" [class.has-error]="contactpreference.invalid && contactpreference.touched">
+        <label class="control-label">Contact Preference:</label>
         <div class="form-control">
           <label class="radio-inline">
-            <input type="radio" value="email" name="contactPreference" [(ngModel)]="contactPreference">Email:
+            <input type="radio" required value="email" name="contactPreference" #contactpreference="ngModel" [(ngModel)]="employee.contactpreference">Email:
           </label>
           <label class="radio-inline">
-            <input type="radio" value="phone" name="contactPreference" [(ngModel)]="contactPreference">Phone:
+            <input type="radio" required value="phone" name="contactPreference" #contactpreference="ngModel" [(ngModel)]="employee.contactpreference">Phone:
           </label>
-
         </div>
+        <span class="help-block" *ngIf="contactpreference.invalid && contactpreference.touched">contact preference is Required..</span>
       </div>
 
       <!-- Radio Button -->
-      <div class="form-group">
-        <label>Gender:</label>
+      <div class="form-group" [class.has-error]="gender.touched && gender.invalid">
+        <label class="control-label">Gender:</label>
         <div class="form-control">
           <label class="radio-inline">
-            <input type="radio" value="male" name="gender" [(ngModel)]="gender">Male:
+            <input type="radio" required value="male" name="gender" #gender="ngModel" [(ngModel)]="employee.gender">Male:
           </label>
           <label class="radio-inline">
-            <input type="radio" value="female" name="gender" [(ngModel)]="gender">Female:
+            <input type="radio" required value="female" name="gender" #gender="ngModel" [(ngModel)]="employee.gender">Female:
           </label>
-
         </div>
+        <span class="help-block" *ngIf="gender.touched && gender.invalid">gender is Required..</span>
       </div>
 
       <!-- Checkbox -->
-      <div class="form-group">
+      <div class="form-group" [class.has-error]="isActive.touched && isActive.invalid">
         <div class="form-control">
-          <label class="checkbox-inline">
-            <input type="checkbox" id="isActive" [(ngModel)]="isActive" name="isActive"> IsActive:
+          <label class="checkbox-inline control-label">
+            <input type="checkbox" id="isActive" [required]="employee.isActive==null" #isActive="ngModel" [(ngModel)]="employee.isActive" name="isActive"> IsActive:
           </label>
         </div>
+        <span class="help-block" *ngIf="isActive.touched && isActive.invalid">IsActive selection is Required..</span>
       </div>
 
       <!-- Dropdown List -->
-      <div class="form-group">
-        <div class="form-control">
-          <label for="department">Department:</label>
-          <select id="department" [(ngModel)]="department" name="department">
+      <div class="form-group"  [class.has-error]="department.touched && department.isvalid">
+        <div class="form-control" >
+          <label for="department" class="control-label">Department:</label>
+          <select id="department" required [(ngModel)]="employee.department" #department="ngModel" name="department">
+            <option value="select" >--Select--</option>
             <option *ngFor="let dept of departments" [value]="dept.id">{{dept.name}}</option>
           </select>
         </div>
+        <span class="help-block" *ngIf="department.touched && department.isvalid">department is Required..</span>
       </div>
 
       <div class="row">
         <div class="form-group col-md-5">
           <div class="form-control">
             <label for="dateOfBirth">Date of Birth:</label>
-            <input type="text" bsDatepicker [bsConfig]="datepickerConfig" id="dateOfBirth" [(ngModel)]="dateOfBirth" name="dateOfBirth"
+            <input type="text" bsDatepicker [bsConfig]="datepickerConfig" id="dateOfBirth" [(ngModel)]="employee.dateOfBirth" name="dateOfBirth"
               placement="left">
           </div>
         </div>
@@ -82,21 +145,24 @@
 
       <div class="form-group">
         <label for="photo">Photo path:</label>
-        <input type="text" id="photo" [(ngModel)]="photo" name="photo" class="form-control">
+        <input type="text" id="photo" [(ngModel)]="employee.photoPath" name="photo" class="form-control">
       </div>
       <div class="form-group">
-          <button type="button" (click)="togglePreviewPhoto()" class="btn btn-primary">{{previewPhoto? "Hide ": "Show "}} Preview</button>
-        </div>
+        <button type="button" (click)="togglePreviewPhoto()" class="btn btn-primary">{{previewPhoto? "Hide ": "Show "}} Preview</button>
+      </div>
       <div class="form-group">
-        <img [src]="photo" width="200px" height="200px" *ngIf="previewPhoto"/>
+        <img [src]="photo" width="200px" height="200px" *ngIf="previewPhoto" />
       </div>
 
 
     </div>
     <div class="panel-footer">
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary" [disabled]="empForm.invalid">Save</button>
     </div>
   </div>
 </form>
 
 Angular generated Form module: {{empForm.value | json}}
+
+<br/>
+<br/> Model Bindings: {{employee | json }}
